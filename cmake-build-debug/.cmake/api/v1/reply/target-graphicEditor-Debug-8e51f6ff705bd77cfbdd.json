@@ -1,0 +1,510 @@
+{
+	"artifacts" : 
+	[
+		{
+			"path" : "graphicEditor"
+		}
+	],
+	"backtrace" : 1,
+	"backtraceGraph" : 
+	{
+		"commands" : 
+		[
+			"add_executable",
+			"target_link_libraries",
+			"set_target_properties",
+			"include",
+			"find_package",
+			"find_dependency",
+			"_qt_internal_find_qt_dependencies",
+			"include_directories"
+		],
+		"files" : 
+		[
+			"CMakeLists.txt",
+			"/opt/homebrew/lib/cmake/Qt6Widgets/Qt6WidgetsTargets.cmake",
+			"/opt/homebrew/lib/cmake/Qt6Widgets/Qt6WidgetsConfig.cmake",
+			"/opt/homebrew/lib/cmake/Qt6/Qt6Config.cmake",
+			"/opt/homebrew/lib/cmake/Qt6Core/Qt6CoreTargets.cmake",
+			"/opt/homebrew/lib/cmake/Qt6Core/Qt6CoreConfig.cmake",
+			"/opt/homebrew/lib/cmake/Qt6Gui/Qt6GuiTargets.cmake",
+			"/opt/homebrew/lib/cmake/Qt6Gui/Qt6GuiConfig.cmake",
+			"/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.27/Modules/CMakeFindDependencyMacro.cmake",
+			"/opt/homebrew/Cellar/qt/6.7.2/lib/cmake/Qt6/QtPublicDependencyHelpers.cmake",
+			"/opt/homebrew/lib/cmake/Qt6Widgets/Qt6WidgetsDependencies.cmake"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 17,
+				"parent" : 0
+			},
+			{
+				"command" : 1,
+				"file" : 0,
+				"line" : 23,
+				"parent" : 0
+			},
+			{
+				"command" : 1,
+				"file" : 0,
+				"line" : 38,
+				"parent" : 0
+			},
+			{
+				"command" : 1,
+				"file" : 0,
+				"line" : 39,
+				"parent" : 0
+			},
+			{
+				"command" : 1,
+				"file" : 0,
+				"line" : 40,
+				"parent" : 0
+			},
+			{
+				"command" : 4,
+				"file" : 0,
+				"line" : 11,
+				"parent" : 0
+			},
+			{
+				"file" : 3,
+				"parent" : 6
+			},
+			{
+				"command" : 4,
+				"file" : 3,
+				"line" : 169,
+				"parent" : 7
+			},
+			{
+				"file" : 2,
+				"parent" : 8
+			},
+			{
+				"command" : 3,
+				"file" : 2,
+				"line" : 55,
+				"parent" : 9
+			},
+			{
+				"file" : 1,
+				"parent" : 10
+			},
+			{
+				"command" : 2,
+				"file" : 1,
+				"line" : 62,
+				"parent" : 11
+			},
+			{
+				"command" : 4,
+				"file" : 3,
+				"line" : 169,
+				"parent" : 7
+			},
+			{
+				"file" : 5,
+				"parent" : 13
+			},
+			{
+				"command" : 3,
+				"file" : 5,
+				"line" : 57,
+				"parent" : 14
+			},
+			{
+				"file" : 4,
+				"parent" : 15
+			},
+			{
+				"command" : 2,
+				"file" : 4,
+				"line" : 62,
+				"parent" : 16
+			},
+			{
+				"command" : 3,
+				"file" : 2,
+				"line" : 43,
+				"parent" : 9
+			},
+			{
+				"file" : 10,
+				"parent" : 18
+			},
+			{
+				"command" : 6,
+				"file" : 10,
+				"line" : 42,
+				"parent" : 19
+			},
+			{
+				"command" : 5,
+				"file" : 9,
+				"line" : 111,
+				"parent" : 20
+			},
+			{
+				"command" : 4,
+				"file" : 8,
+				"line" : 76,
+				"parent" : 21
+			},
+			{
+				"file" : 7,
+				"parent" : 22
+			},
+			{
+				"command" : 3,
+				"file" : 7,
+				"line" : 55,
+				"parent" : 23
+			},
+			{
+				"file" : 6,
+				"parent" : 24
+			},
+			{
+				"command" : 2,
+				"file" : 6,
+				"line" : 62,
+				"parent" : 25
+			},
+			{
+				"command" : 7,
+				"file" : 0,
+				"line" : 28,
+				"parent" : 0
+			}
+		]
+	},
+	"compileGroups" : 
+	[
+		{
+			"compileCommandFragments" : 
+			[
+				{
+					"fragment" : "-g -std=gnu++17 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.0.sdk -mmacosx-version-min=14.6 -fcolor-diagnostics"
+				}
+			],
+			"defines" : 
+			[
+				{
+					"backtrace" : 2,
+					"define" : "QT_CORE_LIB"
+				},
+				{
+					"backtrace" : 2,
+					"define" : "QT_GUI_LIB"
+				},
+				{
+					"backtrace" : 2,
+					"define" : "QT_OPENGLWIDGETS_LIB"
+				},
+				{
+					"backtrace" : 2,
+					"define" : "QT_OPENGL_LIB"
+				},
+				{
+					"backtrace" : 2,
+					"define" : "QT_WIDGETS_LIB"
+				}
+			],
+			"frameworks" : 
+			[
+				{
+					"backtrace" : 2,
+					"isSystem" : true,
+					"path" : "/opt/homebrew/lib/QtCore.framework"
+				},
+				{
+					"backtrace" : 2,
+					"isSystem" : true,
+					"path" : "/opt/homebrew/lib/QtWidgets.framework"
+				},
+				{
+					"backtrace" : 2,
+					"isSystem" : true,
+					"path" : "/opt/homebrew/lib/QtGui.framework"
+				},
+				{
+					"backtrace" : 2,
+					"isSystem" : true,
+					"path" : "/opt/homebrew/lib/QtOpenGL.framework"
+				},
+				{
+					"backtrace" : 2,
+					"isSystem" : true,
+					"path" : "/opt/homebrew/lib/QtOpenGLWidgets.framework"
+				}
+			],
+			"includes" : 
+			[
+				{
+					"backtrace" : 27,
+					"path" : "/opt/homebrew/Cellar/glew/2.2.0_1/include/GL"
+				},
+				{
+					"backtrace" : 27,
+					"path" : "/opt/homebrew/Cellar/glfw/3.4/include/GLFW"
+				},
+				{
+					"backtrace" : 0,
+					"isSystem" : true,
+					"path" : "/Users/raregod/Documents/5sem/graphics/graphicEditorOpenGL/cmake-build-debug/graphicEditor_autogen/include"
+				},
+				{
+					"backtrace" : 2,
+					"isSystem" : true,
+					"path" : "/opt/homebrew/lib/QtCore.framework/Headers"
+				},
+				{
+					"backtrace" : 2,
+					"isSystem" : true,
+					"path" : "/opt/homebrew/share/qt/mkspecs/macx-clang"
+				},
+				{
+					"backtrace" : 2,
+					"isSystem" : true,
+					"path" : "/opt/homebrew/include"
+				},
+				{
+					"backtrace" : 2,
+					"isSystem" : true,
+					"path" : "/opt/homebrew/lib/QtWidgets.framework/Headers"
+				},
+				{
+					"backtrace" : 2,
+					"isSystem" : true,
+					"path" : "/opt/homebrew/lib/QtGui.framework/Headers"
+				},
+				{
+					"backtrace" : 2,
+					"isSystem" : true,
+					"path" : "/opt/homebrew/lib/QtOpenGL.framework/Headers"
+				},
+				{
+					"backtrace" : 2,
+					"isSystem" : true,
+					"path" : "/opt/homebrew/lib/QtOpenGLWidgets.framework/Headers"
+				}
+			],
+			"language" : "CXX",
+			"languageStandard" : 
+			{
+				"backtraces" : 
+				[
+					2
+				],
+				"standard" : "17"
+			},
+			"sourceIndexes" : 
+			[
+				0,
+				1,
+				2
+			]
+		}
+	],
+	"dependencies" : 
+	[
+		{
+			"backtrace" : 0,
+			"id" : "graphicEditor_autogen::@6890427a1f51a3e7e1df"
+		},
+		{
+			"id" : "graphicEditor_autogen_timestamp_deps::@6890427a1f51a3e7e1df"
+		}
+	],
+	"id" : "graphicEditor::@6890427a1f51a3e7e1df",
+	"link" : 
+	{
+		"commandFragments" : 
+		[
+			{
+				"fragment" : "-g",
+				"role" : "flags"
+			},
+			{
+				"fragment" : "",
+				"role" : "flags"
+			},
+			{
+				"fragment" : "-iframework /opt/homebrew/lib",
+				"role" : "frameworkPath"
+			},
+			{
+				"fragment" : "-Wl,-rpath,/opt/homebrew/lib",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 2,
+				"fragment" : "/opt/homebrew/lib/QtOpenGLWidgets.framework/Versions/A/QtOpenGLWidgets",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "-framework OpenGL",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 4,
+				"fragment" : "-framework GLUT",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 5,
+				"fragment" : "-framework QtOpenGL",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 2,
+				"fragment" : "/opt/homebrew/lib/QtWidgets.framework/Versions/A/QtWidgets",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 2,
+				"fragment" : "/opt/homebrew/lib/QtOpenGL.framework/Versions/A/QtOpenGL",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 12,
+				"fragment" : "/opt/homebrew/lib/QtGui.framework/Versions/A/QtGui",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 2,
+				"fragment" : "/opt/homebrew/lib/QtCore.framework/Versions/A/QtCore",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 17,
+				"fragment" : "-framework IOKit",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 17,
+				"fragment" : "-framework DiskArbitration",
+				"role" : "libraries"
+			},
+			{
+				"fragment" : "-Xlinker -framework -Xlinker OpenGL",
+				"role" : "libraries"
+			},
+			{
+				"fragment" : "-Xlinker -framework -Xlinker AGL",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 26,
+				"fragment" : "-framework AppKit",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 26,
+				"fragment" : "-framework ImageIO",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 26,
+				"fragment" : "-framework Metal",
+				"role" : "libraries"
+			}
+		],
+		"language" : "CXX"
+	},
+	"name" : "graphicEditor",
+	"nameOnDisk" : "graphicEditor",
+	"paths" : 
+	{
+		"build" : ".",
+		"source" : "."
+	},
+	"sourceGroups" : 
+	[
+		{
+			"name" : "Source Files",
+			"sourceIndexes" : 
+			[
+				0,
+				1,
+				2
+			]
+		},
+		{
+			"name" : "Header Files",
+			"sourceIndexes" : 
+			[
+				3,
+				4
+			]
+		},
+		{
+			"name" : "",
+			"sourceIndexes" : 
+			[
+				5
+			]
+		},
+		{
+			"name" : "CMake Rules",
+			"sourceIndexes" : 
+			[
+				6
+			]
+		}
+	],
+	"sources" : 
+	[
+		{
+			"backtrace" : 0,
+			"compileGroupIndex" : 0,
+			"isGenerated" : true,
+			"path" : "cmake-build-debug/graphicEditor_autogen/mocs_compilation.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "main.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "MyGLWidget.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"path" : "MyGLWidget.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"path" : "structs.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 0,
+			"isGenerated" : true,
+			"path" : "cmake-build-debug/graphicEditor_autogen/timestamp",
+			"sourceGroupIndex" : 2
+		},
+		{
+			"backtrace" : 0,
+			"isGenerated" : true,
+			"path" : "cmake-build-debug/graphicEditor_autogen/timestamp.rule",
+			"sourceGroupIndex" : 3
+		}
+	],
+	"type" : "EXECUTABLE"
+}

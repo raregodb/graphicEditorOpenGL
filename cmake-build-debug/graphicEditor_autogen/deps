@@ -1,4 +1,4 @@
-graphicRedactor_autogen/timestamp: \
+graphicEditor_autogen/timestamp: \
 	/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.27/Modules/CMakeCInformation.cmake \
 	/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.27/Modules/CMakeCXXInformation.cmake \
 	/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.27/Modules/CMakeCheckCompilerFlagCommonPatterns.cmake \
@@ -44,6 +44,7 @@ graphicRedactor_autogen/timestamp: \
 	/Users/raregod/Documents/5sem/graphics/graphicEditorOpenGL/cmake-build-debug/CMakeFiles/3.27.8/CMakeCXXCompiler.cmake \
 	/Users/raregod/Documents/5sem/graphics/graphicEditorOpenGL/cmake-build-debug/CMakeFiles/3.27.8/CMakeSystem.cmake \
 	/Users/raregod/Documents/5sem/graphics/graphicEditorOpenGL/main.cpp \
+	/Users/raregod/Documents/5sem/graphics/graphicEditorOpenGL/structs.h \
 	/opt/homebrew/Cellar/qt/6.7.2/lib/cmake/Qt6/FindWrapAtomic.cmake \
 	/opt/homebrew/Cellar/qt/6.7.2/lib/cmake/Qt6/FindWrapOpenGL.cmake \
 	/opt/homebrew/Cellar/qt/6.7.2/lib/cmake/Qt6/FindWrapVulkanHeaders.cmake \

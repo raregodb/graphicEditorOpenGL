@@ -1,17 +1,17 @@
 {
-	"BUILD_DIR" : "/Users/raregod/Documents/5sem/graphics/lab2/lab2/cmake-build-debug/graphicRedactor_autogen",
-	"CMAKE_BINARY_DIR" : "/Users/raregod/Documents/5sem/graphics/lab2/lab2/cmake-build-debug",
-	"CMAKE_CURRENT_BINARY_DIR" : "/Users/raregod/Documents/5sem/graphics/lab2/lab2/cmake-build-debug",
-	"CMAKE_CURRENT_SOURCE_DIR" : "/Users/raregod/Documents/5sem/graphics/lab2/lab2",
+	"BUILD_DIR" : "/Users/raregod/Documents/5sem/graphics/graphicEditorOpenGL/cmake-build-debug/graphicRedactor_autogen",
+	"CMAKE_BINARY_DIR" : "/Users/raregod/Documents/5sem/graphics/graphicEditorOpenGL/cmake-build-debug",
+	"CMAKE_CURRENT_BINARY_DIR" : "/Users/raregod/Documents/5sem/graphics/graphicEditorOpenGL/cmake-build-debug",
+	"CMAKE_CURRENT_SOURCE_DIR" : "/Users/raregod/Documents/5sem/graphics/graphicEditorOpenGL",
 	"CMAKE_EXECUTABLE" : "/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/bin/cmake",
 	"CMAKE_LIST_FILES" : 
 	[
-		"/Users/raregod/Documents/5sem/graphics/lab2/lab2/CMakeLists.txt",
-		"/Users/raregod/Documents/5sem/graphics/lab2/lab2/cmake-build-debug/CMakeFiles/3.27.8/CMakeSystem.cmake",
+		"/Users/raregod/Documents/5sem/graphics/graphicEditorOpenGL/CMakeLists.txt",
+		"/Users/raregod/Documents/5sem/graphics/graphicEditorOpenGL/cmake-build-debug/CMakeFiles/3.27.8/CMakeSystem.cmake",
 		"/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.27/Modules/CMakeSystemSpecificInitialize.cmake",
 		"/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.27/Modules/Platform/Darwin-Initialize.cmake",
-		"/Users/raregod/Documents/5sem/graphics/lab2/lab2/cmake-build-debug/CMakeFiles/3.27.8/CMakeCCompiler.cmake",
-		"/Users/raregod/Documents/5sem/graphics/lab2/lab2/cmake-build-debug/CMakeFiles/3.27.8/CMakeCXXCompiler.cmake",
+		"/Users/raregod/Documents/5sem/graphics/graphicEditorOpenGL/cmake-build-debug/CMakeFiles/3.27.8/CMakeCCompiler.cmake",
+		"/Users/raregod/Documents/5sem/graphics/graphicEditorOpenGL/cmake-build-debug/CMakeFiles/3.27.8/CMakeCXXCompiler.cmake",
 		"/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.27/Modules/CMakeSystemSpecificInformation.cmake",
 		"/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.27/Modules/CMakeGenericSystem.cmake",
 		"/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.27/Modules/CMakeInitializeConfigs.cmake",
@@ -340,13 +340,21 @@
 		"/opt/homebrew/lib/cmake/Qt6OpenGLWidgets/Qt6OpenGLWidgetsAdditionalTargetInfo.cmake",
 		"/opt/homebrew/lib/cmake/Qt6OpenGLWidgets/Qt6OpenGLWidgetsVersionlessTargets.cmake"
 	],
-	"CMAKE_SOURCE_DIR" : "/Users/raregod/Documents/5sem/graphics/lab2/lab2",
-	"DEP_FILE" : "/Users/raregod/Documents/5sem/graphics/lab2/lab2/cmake-build-debug/graphicRedactor_autogen/deps",
+	"CMAKE_SOURCE_DIR" : "/Users/raregod/Documents/5sem/graphics/graphicEditorOpenGL",
+	"DEP_FILE" : "/Users/raregod/Documents/5sem/graphics/graphicEditorOpenGL/cmake-build-debug/graphicRedactor_autogen/deps",
 	"DEP_FILE_RULE_NAME" : "graphicRedactor_autogen/timestamp",
-	"HEADERS" : [],
+	"HEADERS" : 
+	[
+		[
+			"/Users/raregod/Documents/5sem/graphics/graphicEditorOpenGL/MyGLWidget.h",
+			"Mu",
+			"EWIEGA46WW/moc_MyGLWidget.cpp",
+			null
+		]
+	],
 	"HEADER_EXTENSIONS" : [ "h", "hh", "h++", "hm", "hpp", "hxx", "in", "txx" ],
-	"INCLUDE_DIR" : "/Users/raregod/Documents/5sem/graphics/lab2/lab2/cmake-build-debug/graphicRedactor_autogen/include",
-	"MOC_COMPILATION_FILE" : "/Users/raregod/Documents/5sem/graphics/lab2/lab2/cmake-build-debug/graphicRedactor_autogen/mocs_compilation.cpp",
+	"INCLUDE_DIR" : "/Users/raregod/Documents/5sem/graphics/graphicEditorOpenGL/cmake-build-debug/graphicRedactor_autogen/include",
+	"MOC_COMPILATION_FILE" : "/Users/raregod/Documents/5sem/graphics/graphicEditorOpenGL/cmake-build-debug/graphicRedactor_autogen/mocs_compilation.cpp",
 	"MOC_DEFINITIONS" : 
 	[
 		"QT_CORE_LIB",
@@ -403,21 +411,26 @@
 		"-c",
 		"/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.27/Modules/CMakeCXXCompilerABI.cpp"
 	],
-	"MOC_PREDEFS_FILE" : "/Users/raregod/Documents/5sem/graphics/lab2/lab2/cmake-build-debug/graphicRedactor_autogen/moc_predefs.h",
+	"MOC_PREDEFS_FILE" : "/Users/raregod/Documents/5sem/graphics/graphicEditorOpenGL/cmake-build-debug/graphicRedactor_autogen/moc_predefs.h",
 	"MOC_RELAXED_MODE" : false,
 	"MOC_SKIP" : [],
 	"MULTI_CONFIG" : false,
 	"PARALLEL" : 10,
-	"PARSE_CACHE_FILE" : "/Users/raregod/Documents/5sem/graphics/lab2/lab2/cmake-build-debug/CMakeFiles/graphicRedactor_autogen.dir/ParseCache.txt",
+	"PARSE_CACHE_FILE" : "/Users/raregod/Documents/5sem/graphics/graphicEditorOpenGL/cmake-build-debug/CMakeFiles/graphicRedactor_autogen.dir/ParseCache.txt",
 	"QT_MOC_EXECUTABLE" : "/opt/homebrew/share/qt/libexec/moc",
 	"QT_UIC_EXECUTABLE" : "",
 	"QT_VERSION_MAJOR" : 6,
 	"QT_VERSION_MINOR" : 7,
-	"SETTINGS_FILE" : "/Users/raregod/Documents/5sem/graphics/lab2/lab2/cmake-build-debug/CMakeFiles/graphicRedactor_autogen.dir/AutogenUsed.txt",
+	"SETTINGS_FILE" : "/Users/raregod/Documents/5sem/graphics/graphicEditorOpenGL/cmake-build-debug/CMakeFiles/graphicRedactor_autogen.dir/AutogenUsed.txt",
 	"SOURCES" : 
 	[
 		[
-			"/Users/raregod/Documents/5sem/graphics/lab2/lab2/main.cpp",
+			"/Users/raregod/Documents/5sem/graphics/graphicEditorOpenGL/MyGLWidget.cpp",
+			"Mu",
+			null
+		],
+		[
+			"/Users/raregod/Documents/5sem/graphics/graphicEditorOpenGL/main.cpp",
 			"Mu",
 			null
 		]

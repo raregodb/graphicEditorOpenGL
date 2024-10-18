@@ -1,4 +1,4 @@
-lab2_autogen/timestamp: \
+graphicRedactor_autogen/timestamp: \
   /Applications/CLion.app/Contents/bin/cmake/mac/aarch64/bin/cmake \
   /Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.27/Modules/CMakeCInformation.cmake \
   /Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.27/Modules/CMakeCXXInformation.cmake \
@@ -38,11 +38,13 @@ lab2_autogen/timestamp: \
   /Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.27/Modules/Platform/Darwin-Initialize.cmake \
   /Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.27/Modules/Platform/Darwin.cmake \
   /Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.27/Modules/Platform/UnixPaths.cmake \
-  /Users/raregod/Documents/5sem/graphics/lab2/lab2/CMakeLists.txt \
+  /Users/raregod/Documents/5sem/graphics/graphicEditorOpenGL/CMakeLists.txt \
+  /Users/raregod/Documents/5sem/graphics/graphicEditorOpenGL/MyGLWidget.cpp \
+  /Users/raregod/Documents/5sem/graphics/graphicEditorOpenGL/MyGLWidget.h \
   CMakeFiles/3.27.8/CMakeCCompiler.cmake \
   CMakeFiles/3.27.8/CMakeCXXCompiler.cmake \
   CMakeFiles/3.27.8/CMakeSystem.cmake \
-  /Users/raregod/Documents/5sem/graphics/lab2/lab2/main.cpp \
+  /Users/raregod/Documents/5sem/graphics/graphicEditorOpenGL/main.cpp \
   /opt/homebrew/Cellar/qt/6.7.2/lib/cmake/Qt6/FindWrapAtomic.cmake \
   /opt/homebrew/Cellar/qt/6.7.2/lib/cmake/Qt6/FindWrapOpenGL.cmake \
   /opt/homebrew/Cellar/qt/6.7.2/lib/cmake/Qt6/FindWrapVulkanHeaders.cmake \
