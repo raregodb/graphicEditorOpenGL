@@ -1,5 +1,5 @@
-/Users/raregod/Documents/5sem/graphics/lab2/lab2/cmake-build-debug/CMakeFiles/graphicRedactor.dir
-/Users/raregod/Documents/5sem/graphics/lab2/lab2/cmake-build-debug/CMakeFiles/edit_cache.dir
-/Users/raregod/Documents/5sem/graphics/lab2/lab2/cmake-build-debug/CMakeFiles/rebuild_cache.dir
-/Users/raregod/Documents/5sem/graphics/lab2/lab2/cmake-build-debug/CMakeFiles/graphicRedactor_autogen_timestamp_deps.dir
-/Users/raregod/Documents/5sem/graphics/lab2/lab2/cmake-build-debug/CMakeFiles/graphicRedactor_autogen.dir
+/Users/raregod/Documents/5sem/graphics/graphicEditorOpenGL/cmake-build-debug/CMakeFiles/graphicEditor.dir
+/Users/raregod/Documents/5sem/graphics/graphicEditorOpenGL/cmake-build-debug/CMakeFiles/edit_cache.dir
+/Users/raregod/Documents/5sem/graphics/graphicEditorOpenGL/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/Users/raregod/Documents/5sem/graphics/graphicEditorOpenGL/cmake-build-debug/CMakeFiles/graphicEditor_autogen_timestamp_deps.dir
+/Users/raregod/Documents/5sem/graphics/graphicEditorOpenGL/cmake-build-debug/CMakeFiles/graphicEditor_autogen.dir

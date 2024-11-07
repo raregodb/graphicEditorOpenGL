@@ -1,491 +1,6 @@
 #define GL_SILENCE_DEPRECATION
 
-#include "iostream"
-#include <GL/glew.h>
-#include <QApplication>
-#include <QPushButton>
-#include <QOpenGLWidget>
-#include <QOpenGLFunctions>
-#include <QKeyEvent>
-#include <QMouseEvent>
-#include <glfw3.h>
-#include "QMainWindow"
-#include "QtCore"
-#include "QtWidgets"
-#include "vector"
-#include <cmath>
-
-
-
-
-struct Point {
-    float x, y;
-};
-
-struct Turtle {
-    float x, y;
-    float angle;
-
-    Turtle(Point fractalStart, float startAngle)
-            : x(fractalStart.x), y(fractalStart.y), angle(startAngle) {}
-};
-
-class glPoint {
-public:
-    glPoint(GLfloat x, GLfloat y, GLfloat R, GLfloat G, GLfloat B) {
-        this->x = x;
-        this->y = y;
-        this->r = R;
-        this->g = G;
-        this->b = B;
-    }
-
-    GLfloat x;
-    GLfloat y;
-    GLfloat r;
-    GLfloat g;
-    GLfloat b;
-
-};
-
-class MyGLWidget : public QOpenGLWidget
-{
-public:
-    MyGLWidget(QWidget *parent) : QOpenGLWidget(parent) {
-        this->setMinimumSize(700, 700);
-        this->setFixedSize(this->size());
-
-        this->windowWidth = this->width();
-        this->windowHeight = this->height();
-
-    }
-
-protected:
-    void initializeGL() override
-    {
-        glClearColor(0.7, 0, 0.9, 1);
-    }
-
-    void resizeGL(int w, int h) override
-    {
-        glViewport(0, 0, this->width(), this->height());
-        glMatrixMode(GL_PROJECTION);
-        glLoadIdentity();
-        gluOrtho2D(-1.0, 1.0, -1.0, 1.0);
-    }
-
-    void paintGL() override
-    {
-        QOpenGLFunctions *f = QOpenGLContext::currentContext()->functions();
-        f->glClear(GL_COLOR_BUFFER_BIT);
-
-        glLineWidth(lineWidth);
-        glPointSize(pointSize);
-
-        if (transparencyState) {
-            glEnable(GL_ALPHA_TEST);
-            glAlphaFunc(transparencyType, alphaTransparency);
-        }
-        if (scissorState) {
-            glEnable(GL_SCISSOR_TEST);
-            glScissor(scissorX, scissorY, scissorW, scissorH);
-        }
-
-        if (blendState) {
-            glEnable(GL_BLEND);
-            glBlendFunc(sFactorType, dFactorType);
-        }
-
-        glBegin(figureType);
-
-        for (auto & figurePoint : figurePoints) {
-            glColor3f(figurePoint.r, figurePoint.g, figurePoint.b);
-            glVertex2f(figurePoint.x, figurePoint.y);
-        }
-        glEnd();
-
-        if (fractalType == 0) {
-            // Определяем начальный треугольник
-            generateFractal(fractalXY, fractalGen, fractalLength, M_PI / 8);
-
-        }
-        else if (fractalType == 1) {
-            if (fractalGen > 6)
-                fractalGen = 6;
-            Turtle turtle(fractalXY, M_PI / 2); // Start at the origin facing up
-            std::string commands = axiom;
-
-            // Generate the fractal by applying rules multiple times
-            for (int i = 0; i < fractalGen; ++i) { // Change the number of iterations as needed
-                //std::cout<<commands<<std::endl;
-                commands = applyRules(commands);
-            }
-
-            //std::cout<<commands<<std::endl;
-            drawBranch(turtle, commands); // Adjust length as needed
-        }
-
-        if (!transparencyState)
-            glDisable(GL_ALPHA_TEST);
-        if (!scissorState)
-            glDisable(GL_SCISSOR_TEST);
-        if (!blendState)
-            glDisable(GL_BLEND);
-
-        glFlush();
-
-        update();
-    }
-
-    void mousePressEvent(QMouseEvent* event) override{
-        mousePosition = event->pos();
-        normalizedMousePosX = (2.0f * mousePosition.x() / this->width()) - 1.0f; // Преобразуем в диапазон [-1, 1]
-        normalizedMousePosY = 1.0f - (2.0f * mousePosition.y() / this->height()); // Преобразуем в диапазон [-1, 1]
-        std::cout<<mousePosition.x()<<"; "<<mousePosition.y()<<"\n";
-        std::cout<<normalizedMousePosX<<"; "<<normalizedMousePosY<<"\n";
-        std::cout<<color.redF()<< " " << color.greenF() << " " << color.blueF() << std::endl;
-        //QOpenGLWidget::mousePressEvent(event);
-        glPoint point(normalizedMousePosX, normalizedMousePosY,
-                      color.redF(), color.greenF(), color.blueF());
-        if (choosingPlaceForFractal) {
-            fractalXY.x = point.x;
-            fractalXY.y = point.y;
-        }
-        else {
-            figurePoints.push_back(point);
-        }
-
-    }
-
-    // Функция для рисования треугольника
-    Point drawBrenchTriangle(Point a, float len, float angle) {
-        Point c = {a.x + ((2*len) * cosf(angle)), a.y + (len * sinf(angle))};
-
-        glBegin(GL_LINE_LOOP);
-        glColor3f(0.207, 0.133, 0.074);
-        glVertex2f(a.x, a.y);
-        glColor3f(0.6, 0.47, 0.31);
-        glVertex2f((a.x + c.x)/2, ((a.y + c.y)/2) - len/10);
-        glColor3f(0.498, 0.274, 0.10);
-        glVertex2f(c.x, c.y);
-        glEnd();
-
-
-        return c;
-    }
-
-
-    void drawLeafTriangle(float centerX, float centerY, float size, float angle) {
-        // Вычисляем координаты вершин треугольника
-        float halfSize = size / 2.0f;
-
-        // Вершины треугольника
-        Point vertices[3];
-        vertices[0] = {centerX + halfSize * cosf(angle), centerY + halfSize * sinf(angle)};
-        vertices[1] = {centerX + halfSize * cosf(angle + 2 * M_PI / 3), centerY + halfSize * sinf(angle + 2 * M_PI / 3)};
-        vertices[2] = {centerX + halfSize * cosf(angle + 4 * M_PI / 3), centerY + halfSize * sinf(angle + 4 * M_PI / 3)};
-
-        // Рисуем первый треугольник
-        glBegin(GL_LINE_LOOP);
-        glColor3f(0.13, 0.5, 0.13);
-        glVertex2f(vertices[0].x, vertices[0].y);
-        glColor3f(0, 0.501, 0);
-        glVertex2f(vertices[1].x, vertices[1].y);
-        glColor3f(0, 0.392, 0);
-        glVertex2f(vertices[2].x, vertices[2].y);
-        glEnd();
-
-        // Рисуем второй треугольник, смещенный на размер
-        float offsetX = halfSize * cosf(angle + M_PI / 3); // Смещение по X
-        float offsetY = halfSize * sinf(angle + M_PI / 3); // Смещение по Y
-
-        vertices[0] = {centerX + offsetX + halfSize * cosf(angle), centerY + offsetY + halfSize * sinf(angle)};
-        vertices[1] = {centerX + offsetX + halfSize * cosf(angle + 2 * M_PI / 3), centerY + offsetY + halfSize * sinf(angle + 2 * M_PI / 3)};
-        vertices[2] = {centerX + offsetX + halfSize * cosf(angle + 4 * M_PI / 3), centerY + offsetY + halfSize * sinf(angle + 4 * M_PI / 3)};
-
-        // Рисуем второй треугольник
-        glBegin(GL_LINE_LOOP);
-        glColor3f(0.13, 0.5, 0.13);
-        glVertex2f(vertices[0].x, vertices[0].y);
-        glColor3f(0, 0.501, 0);
-        glVertex2f(vertices[1].x, vertices[1].y);
-        glColor3f(0, 0.392, 0);
-        glVertex2f(vertices[2].x, vertices[2].y);
-        glEnd();
-    }
-
-
-    // Рекурсивная функция для генерации фрактала
-    void generateFractal(Point startPoint, int depth, float len, float angle) {
-        if (depth == 0) {
-            // Рисуем треугольник
-            drawLeafTriangle(startPoint.x, startPoint.y, len, angle);
-        } else {
-            // Находим вершину текущего треугольника
-            Point tip = drawBrenchTriangle(startPoint, len, angle); // Вершина треугольника
-
-
-            // Рекурсивно генерируем два меньших треугольника
-            generateFractal(tip, depth - 1, len/2, angle + leftTurn);
-            generateFractal(tip, depth - 1, len/2, angle - rightTurn);
-
-            // На последней итерации добавляем "листву"
-            if (depth == 1) {
-                // Рисуем большие треугольники на концах
-                drawLeafTriangle(tip.x,  tip.y, len*2, angle); // Лист
-            }
-        }
-    }
-
-    void drawBranch(Turtle& turtle, const std::string& commands) {
-        std::stack<Turtle> stack;
-        float len = fractalLength;
-
-        for (char command : commands) {
-            switch (command) {
-                case 'F':
-                    glBegin(GL_LINES);
-                    glVertex2f(turtle.x, turtle.y);
-                    turtle.x += len * cos(turtle.angle);
-                    turtle.y += len * sin(turtle.angle);
-                    glVertex2f(turtle.x, turtle.y);
-                    glEnd();
-
-                    break;
-                case '+':
-                    turtle.angle += turn;
-                    break;
-                case '-':
-                    turtle.angle -= turn;
-                    break;
-                case '[':
-                    stack.push(turtle);
-                    break;
-                case ']':
-                    if (!stack.empty()) {
-                        turtle = stack.top();
-                        stack.pop();
-                    }
-                    break;
-                default:
-                    break;
-            }
-        }
-    }
-
-    std::string applyRules(const std::string& input) {
-        std::string output;
-        for (char c : input) {
-            if (c == 'F') {
-                output += newF;
-            } else {
-                output += c;
-            }
-        }
-
-        return output;
-    }
-
-public slots:
-    void changeFigureTypes(int index) {
-        switch (index) {
-            case 0: figureType = GL_POINTS; break;
-            case 1: figureType = GL_LINES; break;
-            case 2: figureType = GL_LINE_STRIP; break;
-            case 3: figureType = GL_LINE_LOOP; break;
-            case 4: figureType = GL_TRIANGLES; break;
-            case 5: figureType = GL_TRIANGLE_STRIP; break;
-            case 6: figureType = GL_TRIANGLE_FAN; break;
-            case 7: figureType = GL_QUADS; break;
-            case 8: figureType = GL_QUAD_STRIP; break;
-            case 9: figureType = GL_POLYGON; break;
-            default: figureType = GL_LINE_LOOP; break;
-        }
-        update();
-    }
-
-    void changeTransparencyType(int index) {
-        switch (index) {
-            case 0: transparencyType = GL_NEVER; break;
-            case 1: transparencyType = GL_LESS; break;
-            case 2: transparencyType = GL_EQUAL; break;
-            case 3: transparencyType = GL_LEQUAL; break;
-            case 4: transparencyType = GL_GREATER; break;
-            case 5: transparencyType = GL_NOTEQUAL; break;
-            case 6: transparencyType = GL_GEQUAL; break;
-            case 7: transparencyType = GL_ALWAYS; break;
-            default: transparencyType = GL_NEVER; break;
-        }
-        update();
-    }
-
-
-    void changeLineWidth(int newLineWidth) {
-        this->lineWidth = newLineWidth;
-        update();
-    }
-
-    void changePointSize(int newPointSize) {
-        this->pointSize = newPointSize;
-        update();
-    }
-
-    void changeColor(QColor newColor) {
-        this->color = newColor;
-        update();
-    }
-
-    void changeAlfpha(int newAlpha) {
-        this->alphaTransparency = newAlpha/10;
-        update();
-    }
-
-    void changeTransparencyState(bool check) {
-        if (check)
-            transparencyState = true;
-        else
-            transparencyState = false;
-        update();
-    }
-
-    void changeScissorState(bool check) {
-        if (check)
-            scissorState = true;
-        else
-            scissorState = false;
-        update();
-    }
-
-    void changeScissorX(int newX) {
-        this->scissorX = newX;
-        update();
-    }
-
-    void changeScissorY(int newY) {
-        this->scissorY = newY;
-        update();
-    }
-
-    void changeScissorW(int newW) {
-        this->scissorW = newW;
-        update();
-    }
-
-    void changeScissorH(int newH) {
-        this->scissorH = newH;
-        update();
-    }
-
-    void changeBlendState(bool check) {
-        if (check)
-            blendState = true;
-        else
-            blendState = false;
-        update();
-    }
-
-    void changeSfactorType(int index) {
-        switch (index) {
-            case 0: sFactorType = GL_ZERO; break;
-            case 1: sFactorType = GL_ONE; break;
-            case 2: sFactorType = GL_DST_COLOR; break;
-            case 3: sFactorType = GL_ONE_MINUS_DST_COLOR; break;
-            case 4: sFactorType = GL_SRC_ALPHA; break;
-            case 5: sFactorType = GL_ONE_MINUS_SRC_ALPHA; break;
-            case 6: sFactorType = GL_DST_ALPHA; break;
-            case 7: sFactorType = GL_ONE_MINUS_DST_ALPHA; break;
-            case 8: sFactorType = GL_SRC_ALPHA_SATURATE; break;
-            default: sFactorType = GL_ZERO; break;
-        }
-        update();
-    }
-    void changeDfactorType(int index) {
-        switch (index) {
-            case 0: dFactorType = GL_ZERO; break;
-            case 1: dFactorType = GL_ONE; break;
-            case 2: dFactorType = GL_SRC_COLOR; break;
-            case 3: dFactorType = GL_ONE_MINUS_SRC_COLOR; break;
-            case 4: dFactorType = GL_SRC_ALPHA; break;
-            case 5: dFactorType = GL_ONE_MINUS_SRC_ALPHA; break;
-            case 6: dFactorType = GL_DST_ALPHA; break;
-            case 7: dFactorType = GL_ONE_MINUS_DST_ALPHA; break;
-            default: dFactorType = GL_ZERO; break;
-        }
-        update();
-    }
-
-    void changeFractalType(int index) {
-        switch (index) {
-            case 0: fractalType = 0; break;
-            case 1: fractalType = 1; break;
-            default: fractalType = 0; break;
-        }
-        update();
-    }
-
-    void changeFractalGenAmount(int value) {
-        this->fractalGen = value;
-        update();
-    }
-
-    void changeFractalLength(float value) {
-        this->fractalLength = value;
-        update();
-    }
-
-    void changeChoosingFractalPositionState(bool state) {
-        if (state)
-            choosingPlaceForFractal = true;
-        else
-            choosingPlaceForFractal = false;
-    }
-    ;
-
-private:
-    QPoint mousePosition;
-
-    GLfloat normalizedMousePosX;
-    GLfloat normalizedMousePosY;
-
-    int windowWidth;
-    int windowHeight;
-
-    GLfloat lineWidth = 5;
-    GLfloat pointSize = 10;
-
-    std::vector<glPoint> figurePoints;
-
-    GLenum figureType = GL_POINTS;
-
-    GLenum transparencyType = GL_ALWAYS;
-    bool transparencyState = false;
-    float alphaTransparency = 0;
-
-    bool scissorState = false;
-    GLint scissorX = 0;
-    GLint scissorY = 0;
-    GLint scissorW = 0;
-    GLint scissorH = 0;
-
-    bool blendState = false;
-    GLenum sFactorType = GL_ZERO;
-    GLenum dFactorType = GL_ZERO;
-
-
-    QColor color;
-
-    Point fractalXY;
-    int fractalType = 0;
-    std::string axiom = "F";
-    std::string newF = "-F+F+[+F-F-]-[-F+F+F]";
-    float turn = M_PI / 8; // pi / 8
-    float fractalLength = 0.3;
-    int fractalGen = 0;
-    float leftTurn = M_PI / 6;
-    float rightTurn = M_PI / 6;
-    bool choosingPlaceForFractal = false;
-
-};
+#include "MyGLWidget.h"
 
 
 class ColorButton : public QPushButton {
@@ -493,18 +8,12 @@ public:
     ColorButton(QWidget* parent, MyGLWidget* glWidget) : QPushButton(parent), glWidget(glWidget) {
         colorDialog = new QColorDialog(Qt::white, this);
         connect(colorDialog, &QColorDialog::colorSelected, this, &ColorButton::colorSelectedSlot);
-
-        //connect(colorDialog, &QColorDialog::colorSelected, this, &ColorButton::colorSelectedSlot);
         connect(this, &ColorButton::clicked, [this] {
             colorDialog->exec();
-
         });
     }
 
-
-
 public slots:
-
     void colorSelectedSlot(const QColor &color) {
         glWidget->changeColor(color);
     };
@@ -513,7 +22,6 @@ private:
     QColorDialog* colorDialog;
     MyGLWidget* glWidget;
 };
-
 
 
 
@@ -527,8 +35,22 @@ public:
         layout = new QVBoxLayout(this);
         layout->setContentsMargins(10, 10, 10, 10);
 
-        primitiveLayout = new QVBoxLayout();
+        drawingSettingsLayout = new QVBoxLayout();
+        drawingSettingsBox = new QGroupBox(this);
+        drawingSettingsBox->setTitle("ВЫБРАТЬ РЕЖИМ");
+        drawingSettingsBox->setContentsMargins(10, 15, 10, 10);
+        drawingTypeComboBox = new QComboBox(this);
+        drawingTypeComboBox->addItem("ОТРИСОВКА ПРИМИТИВА");
+        drawingTypeComboBox->addItem("ПЕРЕМЕСТИТЬ ФРАКТАЛ");
+        drawingTypeComboBox->addItem("ОТРИСОВКА СПЛАЙНА");
+        drawingSettingsLayout->addWidget(drawingTypeComboBox);
+        drawingSettingsBox->setLayout(drawingSettingsLayout);
 
+        layout->addWidget(drawingSettingsBox);
+
+        layout->addSpacing(20);
+
+        primitiveLayout = new QVBoxLayout();
         primitiveBox = new QGroupBox(this);
         primitiveBox->setTitle("НАСТРОЙКИ ПРИМИТИВА");
         primitiveBox->setContentsMargins(10, 15, 10, 15);
@@ -584,11 +106,10 @@ public:
 
         transparencyBox = new QGroupBox(this);
         transparencyBox->setTitle("НАСТРОЙКИ ПРОЗРАЧНОСТИ");
+        transparencyBox->setCheckable(true);
+        transparencyBox->setChecked(false);
 
         transparencyLayout = new QVBoxLayout();
-
-        transparencyCheckBox = new QCheckBox(this);
-        transparencyCheckBox->setText("Тест прозрачности");
 
         transparecyComboBox = new QComboBox(this);
         transparecyComboBox->addItem("GL_NEVER");
@@ -606,7 +127,6 @@ public:
         sliderTransparency->setSingleStep(1);
         sliderTransparency->setValue(0);
 
-        transparencyLayout->addWidget(transparencyCheckBox);
         transparencyLayout->addWidget(transparecyComboBox);
         transparencyLayout->addWidget(sliderTransparency);
 
@@ -617,11 +137,10 @@ public:
 
         scissorBox = new QGroupBox(this);
         scissorBox->setTitle("НАСТРОЙКИ ОТСЕЧЕНИЯ");
+        scissorBox->setCheckable(true);
+        scissorBox->setChecked(false);
 
         scissorLayout = new QVBoxLayout();
-
-        scissorCheckBox = new QCheckBox(this);
-        scissorCheckBox->setText("Тест отсечения");
 
         labelScissorX = new QLabel(this);
         labelScissorX->setText("Отсечение по X:");
@@ -659,7 +178,6 @@ public:
         sliderScissorH->setSingleStep(1);
         sliderScissorH->setValue(0);
 
-        scissorLayout->addWidget(scissorCheckBox);
         scissorLayout->addWidget(labelScissorX);
         scissorLayout->addWidget(sliderScissorX);
         scissorLayout->addWidget(labelScissorY);
@@ -676,12 +194,10 @@ public:
 
         blendBox = new QGroupBox(this);
         blendBox->setTitle("НАСТРОЙКИ СМЕШЕВАНИЯ ЦВЕТОВ");
+        blendBox->setCheckable(true);
+        blendBox->setChecked(false);
 
         blendLayout = new QVBoxLayout();
-
-        blendCheckBox = new QCheckBox(this);
-        blendCheckBox->setText("Тест смешевания цветов");
-
 
         sfactorLabel = new QLabel(this);
         sfactorLabel->setText("sfactor:");
@@ -710,7 +226,6 @@ public:
         dfactorComboBox->addItem("GL_DST_ALPHA");
         dfactorComboBox->addItem("GL_ONE_MINUS_DST_ALPHA");
 
-        blendLayout->addWidget(blendCheckBox);
         blendLayout->addWidget(sfactorLabel);
         blendLayout->addWidget(sfactorComboBox);
         blendLayout->addWidget(dfactorLabel);
@@ -723,11 +238,11 @@ public:
 
         fractalBox = new QGroupBox(this);
         fractalBox->setTitle("НАСТРОЙКИ ФРАКТАЛА");
+        fractalBox->setCheckable(true);
+        fractalBox->setChecked(false);
 
         fractalLayout = new QVBoxLayout();
 
-        placingFractalCheckBox = new QCheckBox(this);
-        placingFractalCheckBox->setText("Установить расположение фрактала");
 
         fractalComboBox = new QComboBox(this);
         fractalComboBox->addItem("Геометрические фракталы");
@@ -746,7 +261,6 @@ public:
         QLabel* fractalLenLabel = new QLabel(this);
         fractalLenLabel->setText("Размер фрактала");
 
-        fractalLayout->addWidget(placingFractalCheckBox);
         fractalLayout->addWidget(fractalComboBox);
         fractalLayout->addWidget(fractalLenLabel);
         fractalLayout->addWidget(fractalGenerations);
@@ -771,7 +285,7 @@ public:
         connect(sliderPointSize, QOverload<int>::of(&QSlider::valueChanged),
                 glWidget, &MyGLWidget::changePointSize);
 
-        connect(transparencyCheckBox, &QCheckBox::checkStateChanged,
+        connect(transparencyBox, &QGroupBox::clicked,
                 glWidget, &MyGLWidget::changeTransparencyState);
 
         connect(transparecyComboBox, QOverload<int>::of(&QComboBox::currentIndexChanged),
@@ -780,7 +294,7 @@ public:
         connect(sliderTransparency, QOverload<int>::of(&QSlider::valueChanged),
                 glWidget, &MyGLWidget::changeAlfpha);
 
-        connect(scissorCheckBox, &QCheckBox::checkStateChanged,
+        connect(scissorBox, &QGroupBox::clicked,
                 glWidget, &MyGLWidget::changeScissorState);
 
         connect(sliderScissorX, QOverload<int>::of(&QSlider::valueChanged),
@@ -795,7 +309,7 @@ public:
         connect(sliderScissorH, QOverload<int>::of(&QSlider::valueChanged),
                 glWidget, &MyGLWidget::changeScissorH);
 
-        connect(blendCheckBox, &QCheckBox::checkStateChanged,
+        connect(blendBox, &QGroupBox::clicked,
                 glWidget, &MyGLWidget::changeBlendState);
 
         connect(sfactorComboBox, QOverload<int>::of(&QComboBox::currentIndexChanged),
@@ -803,6 +317,8 @@ public:
 
         connect(dfactorComboBox, QOverload<int>::of(&QComboBox::currentIndexChanged),
                 glWidget, &MyGLWidget::changeDfactorType);
+        connect(fractalBox, &QGroupBox::clicked,
+                glWidget, &MyGLWidget::showFractal);
 
         connect(fractalComboBox, QOverload<int>::of(&QComboBox::currentIndexChanged),
                 glWidget, &MyGLWidget::changeFractalType);
@@ -811,8 +327,8 @@ public:
                 glWidget, &MyGLWidget::changeFractalGenAmount);
         connect(fractalLengthSizeSpinBox, (&QDoubleSpinBox::valueChanged),
                 glWidget, &MyGLWidget::changeFractalLength);
-        connect(placingFractalCheckBox, (&QCheckBox::checkStateChanged),
-                glWidget, &MyGLWidget::changeChoosingFractalPositionState);
+        connect(drawingTypeComboBox, QOverload<int>::of(&QComboBox::currentIndexChanged),
+                glWidget, &MyGLWidget::changeDrawingType);
     }
 
 private:
@@ -856,6 +372,10 @@ private:
     QVBoxLayout* fractalLayout;
     QDoubleSpinBox* fractalLengthSizeSpinBox;
     QCheckBox* placingFractalCheckBox;
+
+    QGroupBox* drawingSettingsBox;
+    QVBoxLayout* drawingSettingsLayout;
+    QComboBox* drawingTypeComboBox;
 
     MyGLWidget* glWidget;
 };
