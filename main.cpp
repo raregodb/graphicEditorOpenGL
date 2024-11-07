@@ -8,8 +8,6 @@ public:
     ColorButton(QWidget* parent, MyGLWidget* glWidget) : QPushButton(parent), glWidget(glWidget) {
         colorDialog = new QColorDialog(Qt::white, this);
         connect(colorDialog, &QColorDialog::colorSelected, this, &ColorButton::colorSelectedSlot);
-
-        //connect(colorDialog, &QColorDialog::colorSelected, this, &ColorButton::colorSelectedSlot);
         connect(this, &ColorButton::clicked, [this] {
             colorDialog->exec();
         });
@@ -39,7 +37,7 @@ public:
 
         drawingSettingsLayout = new QVBoxLayout();
         drawingSettingsBox = new QGroupBox(this);
-        drawingSettingsBox->setTitle("РЕАКЦИЯ НА НАЖАТИЕ");
+        drawingSettingsBox->setTitle("ВЫБРАТЬ РЕЖИМ");
         drawingSettingsBox->setContentsMargins(10, 15, 10, 10);
         drawingTypeComboBox = new QComboBox(this);
         drawingTypeComboBox->addItem("ОТРИСОВКА ПРИМИТИВА");
@@ -108,11 +106,10 @@ public:
 
         transparencyBox = new QGroupBox(this);
         transparencyBox->setTitle("НАСТРОЙКИ ПРОЗРАЧНОСТИ");
+        transparencyBox->setCheckable(true);
+        transparencyBox->setChecked(false);
 
         transparencyLayout = new QVBoxLayout();
-
-        transparencyCheckBox = new QCheckBox(this);
-        transparencyCheckBox->setText("Тест прозрачности");
 
         transparecyComboBox = new QComboBox(this);
         transparecyComboBox->addItem("GL_NEVER");
@@ -130,7 +127,6 @@ public:
         sliderTransparency->setSingleStep(1);
         sliderTransparency->setValue(0);
 
-        transparencyLayout->addWidget(transparencyCheckBox);
         transparencyLayout->addWidget(transparecyComboBox);
         transparencyLayout->addWidget(sliderTransparency);
 
@@ -141,11 +137,10 @@ public:
 
         scissorBox = new QGroupBox(this);
         scissorBox->setTitle("НАСТРОЙКИ ОТСЕЧЕНИЯ");
+        scissorBox->setCheckable(true);
+        scissorBox->setChecked(false);
 
         scissorLayout = new QVBoxLayout();
-
-        scissorCheckBox = new QCheckBox(this);
-        scissorCheckBox->setText("Тест отсечения");
 
         labelScissorX = new QLabel(this);
         labelScissorX->setText("Отсечение по X:");
@@ -183,7 +178,6 @@ public:
         sliderScissorH->setSingleStep(1);
         sliderScissorH->setValue(0);
 
-        scissorLayout->addWidget(scissorCheckBox);
         scissorLayout->addWidget(labelScissorX);
         scissorLayout->addWidget(sliderScissorX);
         scissorLayout->addWidget(labelScissorY);
@@ -200,12 +194,10 @@ public:
 
         blendBox = new QGroupBox(this);
         blendBox->setTitle("НАСТРОЙКИ СМЕШЕВАНИЯ ЦВЕТОВ");
+        blendBox->setCheckable(true);
+        blendBox->setChecked(false);
 
         blendLayout = new QVBoxLayout();
-
-        blendCheckBox = new QCheckBox(this);
-        blendCheckBox->setText("Тест смешевания цветов");
-
 
         sfactorLabel = new QLabel(this);
         sfactorLabel->setText("sfactor:");
@@ -234,7 +226,6 @@ public:
         dfactorComboBox->addItem("GL_DST_ALPHA");
         dfactorComboBox->addItem("GL_ONE_MINUS_DST_ALPHA");
 
-        blendLayout->addWidget(blendCheckBox);
         blendLayout->addWidget(sfactorLabel);
         blendLayout->addWidget(sfactorComboBox);
         blendLayout->addWidget(dfactorLabel);
@@ -247,6 +238,8 @@ public:
 
         fractalBox = new QGroupBox(this);
         fractalBox->setTitle("НАСТРОЙКИ ФРАКТАЛА");
+        fractalBox->setCheckable(true);
+        fractalBox->setChecked(false);
 
         fractalLayout = new QVBoxLayout();
 
@@ -292,7 +285,7 @@ public:
         connect(sliderPointSize, QOverload<int>::of(&QSlider::valueChanged),
                 glWidget, &MyGLWidget::changePointSize);
 
-        connect(transparencyCheckBox, &QCheckBox::checkStateChanged,
+        connect(transparencyBox, &QGroupBox::clicked,
                 glWidget, &MyGLWidget::changeTransparencyState);
 
         connect(transparecyComboBox, QOverload<int>::of(&QComboBox::currentIndexChanged),
@@ -301,7 +294,7 @@ public:
         connect(sliderTransparency, QOverload<int>::of(&QSlider::valueChanged),
                 glWidget, &MyGLWidget::changeAlfpha);
 
-        connect(scissorCheckBox, &QCheckBox::checkStateChanged,
+        connect(scissorBox, &QGroupBox::clicked,
                 glWidget, &MyGLWidget::changeScissorState);
 
         connect(sliderScissorX, QOverload<int>::of(&QSlider::valueChanged),
@@ -316,7 +309,7 @@ public:
         connect(sliderScissorH, QOverload<int>::of(&QSlider::valueChanged),
                 glWidget, &MyGLWidget::changeScissorH);
 
-        connect(blendCheckBox, &QCheckBox::checkStateChanged,
+        connect(blendBox, &QGroupBox::clicked,
                 glWidget, &MyGLWidget::changeBlendState);
 
         connect(sfactorComboBox, QOverload<int>::of(&QComboBox::currentIndexChanged),
@@ -324,6 +317,8 @@ public:
 
         connect(dfactorComboBox, QOverload<int>::of(&QComboBox::currentIndexChanged),
                 glWidget, &MyGLWidget::changeDfactorType);
+        connect(fractalBox, &QGroupBox::clicked,
+                glWidget, &MyGLWidget::showFractal);
 
         connect(fractalComboBox, QOverload<int>::of(&QComboBox::currentIndexChanged),
                 glWidget, &MyGLWidget::changeFractalType);

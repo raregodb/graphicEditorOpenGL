@@ -21,7 +21,7 @@ public:
 protected:
     void initializeGL() override
     {
-        glClearColor(0.7, 0, 0.9, 1);
+        glClearColor(0.7, 0.5, 0.9, 1);
     }
 
     void resizeGL(int w, int h) override
@@ -44,14 +44,24 @@ protected:
             glEnable(GL_ALPHA_TEST);
             glAlphaFunc(transparencyType, alphaTransparency);
         }
+        else {
+            glDisable(GL_ALPHA_TEST);
+        }
+
         if (scissorState) {
             glEnable(GL_SCISSOR_TEST);
             glScissor(scissorX, scissorY, scissorW, scissorH);
+        }
+        else {
+            glDisable(GL_SCISSOR_TEST);
         }
 
         if (blendState) {
             glEnable(GL_BLEND);
             glBlendFunc(sFactorType, dFactorType);
+        }
+        else {
+            glDisable(GL_BLEND);
         }
 
         glBegin(figureType);
@@ -64,33 +74,27 @@ protected:
 
         drawCurve();
 
-        if (fractalType == 0) {
-            // Определяем начальный треугольник
-            generateFractal(fractalXY, fractalGen, fractalLength, M_PI / 8);
-
-        }
-        else if (fractalType == 1) {
-            if (fractalGen > 6)
-                fractalGen = 6;
-            Turtle turtle(fractalXY, M_PI / 2); // Start at the origin facing up
-            std::string commands = axiom;
-
-            // Generate the fractal by applying rules multiple times
-            for (int i = 0; i < fractalGen; ++i) { // Change the number of iterations as needed
-                //std::cout<<commands<<std::endl;
-                commands = applyRules(commands);
+        if (isFractalSeen) {
+            if (fractalType == 0) {
+                // Определяем начальный треугольник
+                generateFractal(fractalXY, fractalGen, fractalLength, M_PI / 8);
             }
+            else if (fractalType == 1) {
+                if (fractalGen > 6)
+                    fractalGen = 6;
+                Turtle turtle(fractalXY, M_PI / 2); // Start at the origin facing up
+                std::string commands = axiom;
 
-            //std::cout<<commands<<std::endl;
-            drawBranch(turtle, commands); // Adjust length as needed
+                // Generate the fractal by applying rules multiple times
+                for (int i = 0; i < fractalGen; ++i) { // Change the number of iterations as needed
+                    //std::cout<<commands<<std::endl;
+                    commands = applyRules(commands);
+                }
+
+                //std::cout<<commands<<std::endl;
+                drawBranch(turtle, commands); // Adjust length as needed
+            }
         }
-
-        if (!transparencyState)
-            glDisable(GL_ALPHA_TEST);
-        if (!scissorState)
-            glDisable(GL_SCISSOR_TEST);
-        if (!blendState)
-            glDisable(GL_BLEND);
 
         glFlush();
 
@@ -142,6 +146,7 @@ protected:
             controlPoints[selectedPoint].y = normalizedMousePosY;
 
             // Перерисовываем экран
+            drawCurve();
             update();
         }
     }
@@ -246,10 +251,12 @@ protected:
 
                     break;
                 case '+':
-                    turtle.angle += turn;
+                    //turtle.angle += turn;
+                    turtle.angle += M_PI / 4; // Поворот вправо на 45 градусов
                     break;
                 case '-':
-                    turtle.angle -= turn;
+                    //turtle.angle -= turn;
+                    turtle.angle -= M_PI / 4; // Поворот влево на 45 градусов
                     break;
                 case '[':
                     stack.push(turtle);
@@ -268,11 +275,20 @@ protected:
 
     std::string applyRules(const std::string& input) {
         std::string output;
+//        for (char c : input) {
+//            if (c == 'F') {
+//                output += newF;
+//            } else {
+//                output += c;
+//            }
+//        }
         for (char c : input) {
             if (c == 'F') {
-                output += newF;
+                output += "FF"; // Применяем правило F -> FF
+            } else if (c == 'X') {
+                output += "F-X+X+F+F-X"; // Применяем правило X -> F-X+X+F+F-X
             } else {
-                output += c;
+                output += c; // Оставляем другие символы без изменений
             }
         }
 
@@ -331,6 +347,7 @@ protected:
         glBegin(GL_LINE_STRIP);
         for (float x = controlPoints.front().x; x <= controlPoints.back().x; x += 0.01f) {
             float y = lagrangeInterpolation(x, controlPoints);
+            glColor3f(0, 1, 0.2);
             glVertex2f(x, y);
         }
         glEnd();
@@ -346,7 +363,7 @@ protected:
             drawCircle(point.x, point.y, 0.05f, 30); // Рисуем круг с радиусом 0.05 и 30 сегментами
         }
 
-        for (size_t i = 0; i < controlPoints.size(); i++) {
+        for (int i = 0; i < controlPoints.size(); i++) {
             if (i > 0 && i < controlPoints.size() - 1) {
                 // Вычисляем касательную
                 Point tangent = computeTangent(controlPoints, i);
@@ -489,6 +506,13 @@ public slots:
         update();
     }
 
+    void showFractal(bool state) {
+        if (state)
+            isFractalSeen = true;
+        else
+            isFractalSeen = false;
+    }
+
     void changeFractalType(int index) {
         switch (index) {
             case 0: fractalType = 0; break;
@@ -564,6 +588,7 @@ private:
     float leftTurn = M_PI / 6;
     float rightTurn = M_PI / 6;
     bool choosingPlaceForFractal = false;
+    bool isFractalSeen = false;
 
 
     std::vector<glPoint> controlPoints;
