@@ -1,2 +1,2 @@
 # graphicEditorOpenGL
-This is graphic editor with various OpenGL functions, that works in QT application. 
+This is graphic redactor with various OpenGL functions, that works in QT application. 

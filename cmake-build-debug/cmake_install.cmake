@@ -1,4 +1,4 @@
-# Install script for directory: /Users/raregod/Documents/5sem/graphics/graphicEditorOpenGL
+# Install script for directory: /Users/raregod/Documents/5sem/graphics/graphicEditorOpenGL-4_iteration
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -45,5 +45,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/Users/raregod/Documents/5sem/graphics/graphicEditorOpenGL/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/Users/raregod/Documents/5sem/graphics/graphicEditorOpenGL-4_iteration/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

@@ -17,7 +17,8 @@ set(SOURCE_FILES main.cpp)
 add_executable(graphicEditor main.cpp
         MyGLWidget.cpp
         MyGLWidget.h
-        structs.h)
+        structs.h
+        shaders/shadersSource.h)
 
 # Link the library to the executable
 target_link_libraries(graphicEditor Qt6::Core Qt6::Widgets Qt6::OpenGL Qt6::OpenGLWidgets)

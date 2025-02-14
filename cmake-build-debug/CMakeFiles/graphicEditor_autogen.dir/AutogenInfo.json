@@ -1,15 +1,16 @@
 {
-	"BUILD_DIR" : "/Users/raregod/Documents/5sem/graphics/graphicEditorOpenGL/cmake-build-debug/graphicEditor_autogen",
-	"CMAKE_BINARY_DIR" : "/Users/raregod/Documents/5sem/graphics/graphicEditorOpenGL/cmake-build-debug",
-	"CMAKE_CURRENT_BINARY_DIR" : "/Users/raregod/Documents/5sem/graphics/graphicEditorOpenGL/cmake-build-debug",
-	"CMAKE_CURRENT_SOURCE_DIR" : "/Users/raregod/Documents/5sem/graphics/graphicEditorOpenGL",
+	"BUILD_DIR" : "/Users/raregod/Documents/5sem/graphics/graphicEditorOpenGL-4_iteration/cmake-build-debug/graphicEditor_autogen",
+	"CMAKE_BINARY_DIR" : "/Users/raregod/Documents/5sem/graphics/graphicEditorOpenGL-4_iteration/cmake-build-debug",
+	"CMAKE_CURRENT_BINARY_DIR" : "/Users/raregod/Documents/5sem/graphics/graphicEditorOpenGL-4_iteration/cmake-build-debug",
+	"CMAKE_CURRENT_SOURCE_DIR" : "/Users/raregod/Documents/5sem/graphics/graphicEditorOpenGL-4_iteration",
 	"CMAKE_EXECUTABLE" : "/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/bin/cmake",
 	"CMAKE_LIST_FILES" : 
 	[
-		"/Users/raregod/Documents/5sem/graphics/graphicEditorOpenGL/CMakeLists.txt",
+		"/Users/raregod/Documents/5sem/graphics/graphicEditorOpenGL-4_iteration/CMakeLists.txt",
 		"/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.27/Modules/CMakeDetermineSystem.cmake",
 		"/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.27/Modules/CMakeSystem.cmake.in",
-		"/Users/raregod/Documents/5sem/graphics/graphicEditorOpenGL/cmake-build-debug/CMakeFiles/3.27.8/CMakeSystem.cmake",
+		"/Users/raregod/Documents/5sem/graphics/graphicEditorOpenGL-4_iteration/cmake-build-debug/CMakeFiles/3.27.8/CMakeSystem.cmake",
+		"/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.27/Modules/CMakeUnixFindMake.cmake",
 		"/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.27/Modules/CMakeSystemSpecificInitialize.cmake",
 		"/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.27/Modules/Platform/Darwin-Initialize.cmake",
 		"/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.27/Modules/CMakeDetermineCCompiler.cmake",
@@ -102,7 +103,7 @@
 		"/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.27/Modules/Compiler/IBMCPP-C-DetermineVersionInternal.cmake",
 		"/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.27/Modules/CMakeFindBinUtils.cmake",
 		"/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.27/Modules/CMakeCCompiler.cmake.in",
-		"/Users/raregod/Documents/5sem/graphics/graphicEditorOpenGL/cmake-build-debug/CMakeFiles/3.27.8/CMakeCCompiler.cmake",
+		"/Users/raregod/Documents/5sem/graphics/graphicEditorOpenGL-4_iteration/cmake-build-debug/CMakeFiles/3.27.8/CMakeCCompiler.cmake",
 		"/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.27/Modules/CMakeDetermineCXXCompiler.cmake",
 		"/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.27/Modules/CMakeDetermineCompiler.cmake",
 		"/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.27/Modules/Platform/Darwin-Determine-CXX.cmake",
@@ -190,12 +191,15 @@
 		"/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.27/Modules/Compiler/IBMCPP-CXX-DetermineVersionInternal.cmake",
 		"/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.27/Modules/CMakeFindBinUtils.cmake",
 		"/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.27/Modules/CMakeCXXCompiler.cmake.in",
-		"/Users/raregod/Documents/5sem/graphics/graphicEditorOpenGL/cmake-build-debug/CMakeFiles/3.27.8/CMakeCXXCompiler.cmake",
+		"/Users/raregod/Documents/5sem/graphics/graphicEditorOpenGL-4_iteration/cmake-build-debug/CMakeFiles/3.27.8/CMakeCXXCompiler.cmake",
 		"/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.27/Modules/CMakeSystemSpecificInformation.cmake",
 		"/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.27/Modules/CMakeGenericSystem.cmake",
 		"/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.27/Modules/CMakeInitializeConfigs.cmake",
 		"/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.27/Modules/Platform/Darwin.cmake",
 		"/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.27/Modules/Platform/UnixPaths.cmake",
+		"/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.27/Modules/CMakeFindCodeBlocks.cmake",
+		"/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.27/Modules/CMakeExtraGeneratorDetermineCompilerMacrosAndIncludeDirs.cmake",
+		"/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.27/Modules/ProcessorCount.cmake",
 		"/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.27/Modules/CMakeCInformation.cmake",
 		"/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.27/Modules/CMakeLanguageInformation.cmake",
 		"/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.27/Modules/Compiler/AppleClang-C.cmake",
@@ -218,7 +222,7 @@
 		"/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.27/Modules/CMakeDetermineCompileFeatures.cmake",
 		"/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.27/Modules/Internal/FeatureTesting.cmake",
 		"/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.27/Modules/CMakeCCompiler.cmake.in",
-		"/Users/raregod/Documents/5sem/graphics/graphicEditorOpenGL/cmake-build-debug/CMakeFiles/3.27.8/CMakeCCompiler.cmake",
+		"/Users/raregod/Documents/5sem/graphics/graphicEditorOpenGL-4_iteration/cmake-build-debug/CMakeFiles/3.27.8/CMakeCCompiler.cmake",
 		"/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.27/Modules/CMakeCXXInformation.cmake",
 		"/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.27/Modules/CMakeLanguageInformation.cmake",
 		"/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.27/Modules/Compiler/AppleClang-CXX.cmake",
@@ -238,7 +242,7 @@
 		"/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.27/Modules/CMakeDetermineCompileFeatures.cmake",
 		"/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.27/Modules/Internal/FeatureTesting.cmake",
 		"/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.27/Modules/CMakeCXXCompiler.cmake.in",
-		"/Users/raregod/Documents/5sem/graphics/graphicEditorOpenGL/cmake-build-debug/CMakeFiles/3.27.8/CMakeCXXCompiler.cmake",
+		"/Users/raregod/Documents/5sem/graphics/graphicEditorOpenGL-4_iteration/cmake-build-debug/CMakeFiles/3.27.8/CMakeCXXCompiler.cmake",
 		"/opt/homebrew/lib/cmake/Qt6/Qt6ConfigVersion.cmake",
 		"/opt/homebrew/lib/cmake/Qt6/Qt6ConfigVersionImpl.cmake",
 		"/opt/homebrew/lib/cmake/Qt6/Qt6Config.cmake",
@@ -543,27 +547,33 @@
 		"/opt/homebrew/lib/cmake/Qt6OpenGLWidgets/Qt6OpenGLWidgetsAdditionalTargetInfo.cmake",
 		"/opt/homebrew/lib/cmake/Qt6OpenGLWidgets/Qt6OpenGLWidgetsVersionlessTargets.cmake"
 	],
-	"CMAKE_SOURCE_DIR" : "/Users/raregod/Documents/5sem/graphics/graphicEditorOpenGL",
-	"DEP_FILE" : "/Users/raregod/Documents/5sem/graphics/graphicEditorOpenGL/cmake-build-debug/graphicEditor_autogen/deps",
-	"DEP_FILE_RULE_NAME" : "graphicEditor_autogen/timestamp",
+	"CMAKE_SOURCE_DIR" : "/Users/raregod/Documents/5sem/graphics/graphicEditorOpenGL-4_iteration",
+	"DEP_FILE" : "",
+	"DEP_FILE_RULE_NAME" : "",
 	"HEADERS" : 
 	[
 		[
-			"/Users/raregod/Documents/5sem/graphics/graphicEditorOpenGL/MyGLWidget.h",
+			"/Users/raregod/Documents/5sem/graphics/graphicEditorOpenGL-4_iteration/MyGLWidget.h",
 			"Mu",
 			"EWIEGA46WW/moc_MyGLWidget.cpp",
 			null
 		],
 		[
-			"/Users/raregod/Documents/5sem/graphics/graphicEditorOpenGL/structs.h",
+			"/Users/raregod/Documents/5sem/graphics/graphicEditorOpenGL-4_iteration/shaders/shadersSource.h",
+			"Mu",
+			"3QPYF6J63P/moc_shadersSource.cpp",
+			null
+		],
+		[
+			"/Users/raregod/Documents/5sem/graphics/graphicEditorOpenGL-4_iteration/structs.h",
 			"Mu",
 			"EWIEGA46WW/moc_structs.cpp",
 			null
 		]
 	],
 	"HEADER_EXTENSIONS" : [ "h", "hh", "h++", "hm", "hpp", "hxx", "in", "txx" ],
-	"INCLUDE_DIR" : "/Users/raregod/Documents/5sem/graphics/graphicEditorOpenGL/cmake-build-debug/graphicEditor_autogen/include",
-	"MOC_COMPILATION_FILE" : "/Users/raregod/Documents/5sem/graphics/graphicEditorOpenGL/cmake-build-debug/graphicEditor_autogen/mocs_compilation.cpp",
+	"INCLUDE_DIR" : "/Users/raregod/Documents/5sem/graphics/graphicEditorOpenGL-4_iteration/cmake-build-debug/graphicEditor_autogen/include",
+	"MOC_COMPILATION_FILE" : "/Users/raregod/Documents/5sem/graphics/graphicEditorOpenGL-4_iteration/cmake-build-debug/graphicEditor_autogen/mocs_compilation.cpp",
 	"MOC_DEFINITIONS" : 
 	[
 		"QT_CORE_LIB",
@@ -595,10 +605,8 @@
 		"/opt/homebrew/lib/QtOpenGL.framework",
 		"/opt/homebrew/lib/QtOpenGLWidgets.framework/Headers",
 		"/opt/homebrew/lib/QtOpenGLWidgets.framework",
-		"/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.1.sdk/usr/include/c++/v1",
-		"/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/16/include",
-		"/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.1.sdk/usr/include",
-		"/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include"
+		"/usr/include",
+		"/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk/usr/include"
 	],
 	"MOC_MACRO_NAMES" : 
 	[
@@ -620,26 +628,26 @@
 		"-c",
 		"/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.27/Modules/CMakeCXXCompilerABI.cpp"
 	],
-	"MOC_PREDEFS_FILE" : "/Users/raregod/Documents/5sem/graphics/graphicEditorOpenGL/cmake-build-debug/graphicEditor_autogen/moc_predefs.h",
+	"MOC_PREDEFS_FILE" : "/Users/raregod/Documents/5sem/graphics/graphicEditorOpenGL-4_iteration/cmake-build-debug/graphicEditor_autogen/moc_predefs.h",
 	"MOC_RELAXED_MODE" : false,
 	"MOC_SKIP" : [],
 	"MULTI_CONFIG" : false,
 	"PARALLEL" : 10,
-	"PARSE_CACHE_FILE" : "/Users/raregod/Documents/5sem/graphics/graphicEditorOpenGL/cmake-build-debug/CMakeFiles/graphicEditor_autogen.dir/ParseCache.txt",
+	"PARSE_CACHE_FILE" : "/Users/raregod/Documents/5sem/graphics/graphicEditorOpenGL-4_iteration/cmake-build-debug/CMakeFiles/graphicEditor_autogen.dir/ParseCache.txt",
 	"QT_MOC_EXECUTABLE" : "/opt/homebrew/share/qt/libexec/moc",
 	"QT_UIC_EXECUTABLE" : "",
 	"QT_VERSION_MAJOR" : 6,
 	"QT_VERSION_MINOR" : 7,
-	"SETTINGS_FILE" : "/Users/raregod/Documents/5sem/graphics/graphicEditorOpenGL/cmake-build-debug/CMakeFiles/graphicEditor_autogen.dir/AutogenUsed.txt",
+	"SETTINGS_FILE" : "/Users/raregod/Documents/5sem/graphics/graphicEditorOpenGL-4_iteration/cmake-build-debug/CMakeFiles/graphicEditor_autogen.dir/AutogenUsed.txt",
 	"SOURCES" : 
 	[
 		[
-			"/Users/raregod/Documents/5sem/graphics/graphicEditorOpenGL/MyGLWidget.cpp",
+			"/Users/raregod/Documents/5sem/graphics/graphicEditorOpenGL-4_iteration/MyGLWidget.cpp",
 			"Mu",
 			null
 		],
 		[
-			"/Users/raregod/Documents/5sem/graphics/graphicEditorOpenGL/main.cpp",
+			"/Users/raregod/Documents/5sem/graphics/graphicEditorOpenGL-4_iteration/main.cpp",
 			"Mu",
 			null
 		]

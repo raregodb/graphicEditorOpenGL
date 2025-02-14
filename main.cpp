@@ -24,7 +24,6 @@ private:
 };
 
 
-
 class InterfaceWidget : public QWidget {
 public:
     InterfaceWidget(MyGLWidget* glWidget, QWidget* parent = nullptr) : QWidget(parent) {
@@ -381,9 +380,6 @@ private:
 };
 
 
-
-
-
 class MyMainWindow : public QWidget {
 public:
     MyMainWindow() : QWidget() {
@@ -417,9 +413,13 @@ private:
 };
 
 
-
-
 int main(int argc, char *argv[]) {
+
+    QSurfaceFormat format;
+    format.setVersion(2, 0); // Установите нужную версию
+    format.setProfile(QSurfaceFormat::CompatibilityProfile); // Установите профиль
+    QSurfaceFormat::setDefaultFormat(format);
+
     QApplication a(argc, argv);
 
     MyMainWindow myMainWindow;

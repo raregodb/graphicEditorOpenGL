@@ -3,25 +3,30 @@
 //
 
 #include "iostream"
-#include <GL/glew.h>
+
+//#include <GL/glew.h>
+#include <GLFW/glfw3.h>
 #include <QApplication>
 #include <QPushButton>
 #include <QOpenGLWidget>
 #include <QOpenGLFunctions>
 #include <QKeyEvent>
 #include <QMouseEvent>
-#include <glfw3.h>
+//#include "GLFW/glfw3.h"
+//#include <glfw3.h>
 #include "QMainWindow"
 #include "QtCore"
 #include "QtWidgets"
 #include "vector"
 #include <cmath>
 
+#include "shaders/shadersSource.h"
+
 #ifndef GRAPHICEDITOR_STRUCTS_H
 #define GRAPHICEDITOR_STRUCTS_H
 
 struct Point {
-    float x, y;
+    float x, y, z;
 };
 
 struct Turtle {

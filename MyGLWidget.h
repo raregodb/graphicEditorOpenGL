@@ -5,6 +5,7 @@
 #ifndef GRAPHICREDACTOR_MYGLWIDGET_H
 #define GRAPHICREDACTOR_MYGLWIDGET_H
 
+#include <fstream>
 #include "structs.h"
 
 class MyGLWidget : public QOpenGLWidget
@@ -19,9 +20,137 @@ public:
     }
 
 protected:
+
+    void initializeShaders() {
+        GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER);
+        glShaderSource(vertexShader, 1, &vertexShaderSource, nullptr);
+        glCompileShader(vertexShader);
+        GLint success;
+        GLchar infoLog[512];
+        glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &success);
+        if (!success)
+        {
+            glGetShaderInfoLog(vertexShader, 512, NULL, infoLog);
+            std::cout << "ERROR::SHADER::FRAGMENT::COMPILATION_FAILED\n" << infoLog << std::endl;
+        }
+
+        GLuint fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
+        glShaderSource(fragmentShader, 1, &fragmentShaderSource, nullptr);
+        glCompileShader(fragmentShader);
+        glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, &success);
+        if (!success)
+        {
+            glGetShaderInfoLog(fragmentShader, 512, NULL, infoLog);
+            std::cout << "ERROR::SHADER::FRAGMENT::COMPILATION_FAILED\n" << infoLog << std::endl;
+        }
+
+        // Linking
+        shaderProgram = glCreateProgram();
+        glAttachShader(shaderProgram, vertexShader);
+        glAttachShader(shaderProgram, fragmentShader);
+        glLinkProgram(shaderProgram);
+        glGetProgramiv(shaderProgram, GL_LINK_STATUS, &success);
+        if (!success) {
+            GLint logLength;
+            glGetProgramiv(shaderProgram, GL_INFO_LOG_LENGTH, &logLength);
+            char* log = new char[logLength];
+            glGetProgramInfoLog(shaderProgram, logLength, &logLength, log);
+            std::cerr << "Program link error: " << log << std::endl;
+            delete[] log;
+        }
+        glDeleteShader(vertexShader);
+        glDeleteShader(fragmentShader);
+    }
+
+    void settingUpVertices() {
+        // Создание VAO
+        glGenVertexArrays(1, &VAO);
+        glBindVertexArray(VAO);
+
+        // Создание VBO для позиций
+        glGenBuffers(1, &VBO[0]);
+        glBindBuffer(GL_ARRAY_BUFFER, VBO[0]);
+        glBufferData(GL_ARRAY_BUFFER, sizeof(float) * positions.size(), positions.data(), GL_STATIC_DRAW);
+        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
+        glEnableVertexAttribArray(0);
+
+        // Создание VBO для нормалей
+        glGenBuffers(1, &VBO[1]);
+        glBindBuffer(GL_ARRAY_BUFFER, VBO[1]);
+        glBufferData(GL_ARRAY_BUFFER, sizeof(float) * normals.size(), normals.data(), GL_STATIC_DRAW);
+        glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
+        glEnableVertexAttribArray(1);
+
+        // Отменяем привязку VAO
+        glBindVertexArray(0);
+
+    }
+
+
     void initializeGL() override
     {
         glClearColor(0.7, 0.5, 0.9, 1);
+        timer.start();
+
+        initializeShaders();
+        settingUpVertices();
+        QMatrix4x4 model, view, projection;
+
+        // Позиция камеры
+        GLfloat eyeX = 0.0f, eyeY = 5.0f, eyeZ = 10.0f;  // Камера на высоте Y = 5
+        // Точка, куда смотрит камера
+        GLfloat centerX = 0.0f, centerY = 0.0f, centerZ = 0.0f;
+        // Смещаем центр вниз (камера будет смотреть ниже)
+        centerY -= 2.0f;  // Сдвигаем точку взгляда вниз по оси Y
+        // Направление "вверх"
+        GLfloat upX = 0.0f, upY = 1.0f, upZ = 0.0f;
+        // Создаём матрицу вида
+        view.lookAt(
+                QVector3D(eyeX, eyeY, eyeZ),        // Позиция камеры
+                QVector3D(centerX, centerY, centerZ), // Точка, куда смотрим
+                QVector3D(upX, upY, upZ)           // Направление "вверх"
+        );
+        model.translate(0.0f, 0.0f, -2.0f);
+        projection.perspective(45.0f, float(width()) / height(), 0.1f, 100.0f);
+
+        glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "model"), 1, GL_FALSE, model.data());
+        glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "view"), 1, GL_FALSE, view.data());
+        glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "projection"), 1, GL_FALSE, projection.data());
+        QMatrix4x4 normalMatrix = model.inverted().transposed();
+        glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "normalMatrix"), 1, GL_FALSE, normalMatrix.constData());
+
+        // Передача других униформ (позиции света, цвета и т.д.)
+        glUniform3f(glGetUniformLocation(shaderProgram, "lightPos"),  0.3f, 0.5f, 0.0f);
+        glUniform3f(glGetUniformLocation(shaderProgram, "viewPos"), 0.0f, 0.0f, 5.0f);
+        glUniform3f(glGetUniformLocation(shaderProgram, "lightColor"), 1.0f, 1.0f, 1.0f);
+        glUniform3f(glGetUniformLocation(shaderProgram, "objectColor"), 1.0f, 0.0f, 0.0f);
+        glUseProgram(shaderProgram);
+        // Позиции
+        GLuint positionAttrib = glGetAttribLocation(shaderProgram, "position");
+        glEnableVertexAttribArray(positionAttrib);
+        glVertexAttribPointer(positionAttrib, 3, GL_FLOAT, GL_TRUE, 0, (void*)0);
+
+        // Нормали
+        GLuint normalAttrib = glGetAttribLocation(shaderProgram, "normal");
+        glEnableVertexAttribArray(normalAttrib);
+        glVertexAttribPointer(normalAttrib, 3, GL_FLOAT, GL_TRUE, 0, (void*)0);
+
+        glEnable(GL_LIGHTING);
+        glEnable(GL_LIGHT0);
+
+        GLfloat lightPosition[] = { 0.0f, 0.0f, 0.2, 1.0f };
+        GLfloat lightAmbient[] = { 0.2f, 0.2f, 0.2f, 1.0f };
+        GLfloat lightDiffuse[] = { 0, 0, 0, 0 };
+        GLfloat lightSpecular[] = { 1.0f, 1.0f, 1.0f, 1.0f };
+        GLfloat baseSpecular[] = { 1.0f, 1.0f, 1.0f, 1.0f };
+        glLightfv(GL_LIGHT0, GL_POSITION, lightPosition);
+        glLightfv(GL_LIGHT0, GL_AMBIENT, lightAmbient);
+        glLightfv(GL_LIGHT0, GL_DIFFUSE, lightDiffuse);
+        glLightfv(GL_LIGHT0, GL_SPECULAR, lightSpecular);
+        glMaterialf(GL_FRONT, GL_SHININESS, 32.0f);
+        glMaterialfv(GL_FRONT, GL_SPECULAR, baseSpecular);
+
+
     }
 
     void resizeGL(int w, int h) override
@@ -29,13 +158,23 @@ protected:
         glViewport(0, 0, this->width(), this->height());
         glMatrixMode(GL_PROJECTION);
         glLoadIdentity();
-        gluOrtho2D(-1.0, 1.0, -1.0, 1.0);
+        //gluOrtho2D(-1.0, 1.0, -1.0, 1.0);
     }
 
     void paintGL() override
     {
+        glUseProgram(shaderProgram);
+        GLenum err;
+        while ((err = glGetError()) != GL_NO_ERROR) {
+            std::cerr << "OpenGL error: " << err << std::endl;
+        }
+
+
         QOpenGLFunctions *f = QOpenGLContext::currentContext()->functions();
         f->glClear(GL_COLOR_BUFFER_BIT);
+
+        glEnable(GL_DEPTH_TEST);
+        glRotatef(0.1f, 0.0f, 1.0f, 0.0f);
 
         glLineWidth(lineWidth);
         glPointSize(pointSize);
@@ -72,7 +211,9 @@ protected:
         }
         glEnd();
 
-        drawCurve();
+        //drawCurve();
+
+
 
         if (isFractalSeen) {
             if (fractalType == 0) {
@@ -96,9 +237,176 @@ protected:
             }
         }
 
+        float currentTime = timer.elapsed() / 1000.0f; // Время в секундах
+        float lightIntensity = (sin(currentTime) + 1.0f) / 2.0f;
+        //glUniform1f(glGetUniformLocation(shaderProgram, "lightIntensity"), 1.0f);
+
+        GLfloat baseDiffuse[] = { this->color.redF(), this->color.greenF(), this->color.blueF(), this->color.alphaF() };
+        GLfloat baseAmbient[] = { 0, 0, 0 };
+
+        GLfloat dynamicDiffuse[] = {
+                baseDiffuse[0] * lightIntensity,
+                baseDiffuse[1] * lightIntensity,
+                baseDiffuse[2] * lightIntensity,
+                1.0f
+        };
+
+        glLightfv(GL_LIGHT0, GL_DIFFUSE, dynamicDiffuse);
+        glLightfv(GL_LIGHT0, GL_AMBIENT, baseAmbient);
+
+        glUseProgram(0);
+
+        glBegin(GL_POINTS);
+        glColor3f(this->color.redF()/255, this->color.greenF()/255, this->color.blueF()/255);
+        glVertex3f(0.0f, 0, -0.2);
+        glEnd();
+
+        glUseProgram(shaderProgram);
+
+        drawSurfaceVAO();
+
+
         glFlush();
 
         update();
+    }
+
+    void drawSurfaceVAO() {
+        if (controlPoints.empty()) {
+            return;
+        }
+
+        positions.clear();
+        normals.clear();
+
+        const int numLayers = 2;      // Количество слоев по оси Z
+        const float zStep = 0.5f;     // Шаг по оси Z
+        const float dx = 0.01f;        // Шаг по оси X для интерполяции
+
+        std::vector<std::vector<Point>> layers(numLayers);
+
+        // Генерация точек поверхности
+        for (int layer = 0; layer < numLayers; ++layer) {
+            float z = layer * zStep; // Определяем уровень Z для текущего слоя
+
+            for (float x = controlPoints.front().x; x <= controlPoints.back().x; x += dx) {
+                float y = lagrangeInterpolation(x, controlPoints);
+                layers[layer].emplace_back(Point{x, y, z}); // Сохраняем точку в слое
+            }
+        }
+
+        // Создание треугольников между слоями
+        for (int layer = 0; layer < numLayers - 1; ++layer) {
+            for (size_t i = 0; i < layers[layer].size() - 1; ++i) {
+                const auto& p1 = layers[layer][i];
+                const auto& p2 = layers[layer][i + 1];
+                const auto& p3 = layers[layer + 1][i];
+                const auto& p4 = layers[layer + 1][i + 1];
+
+                // Добавляем два треугольника для квадрата
+                addTriangle(p1, p2, p3);
+                addTriangle(p3, p2, p4);
+            }
+        }
+
+        // Обновляем буферы с новыми данными
+        glBindVertexArray(VAO);
+
+        // Обновляем VBO для позиций
+        glBindBuffer(GL_ARRAY_BUFFER, VBO[0]);
+        glBufferData(GL_ARRAY_BUFFER, sizeof(float) * positions.size(), positions.data(), GL_DYNAMIC_DRAW);
+
+        // Обновляем VBO для нормалей
+        glBindBuffer(GL_ARRAY_BUFFER, VBO[1]);
+        glBufferData(GL_ARRAY_BUFFER, sizeof(float) * normals.size(), normals.data(), GL_DYNAMIC_DRAW);
+
+        glBindVertexArray(0);
+
+
+        // Отрисовка поверхности
+        GLint uniformCount;
+        glGetProgramiv(shaderProgram, GL_ACTIVE_UNIFORMS, &uniformCount);
+        glBindVertexArray(VAO);
+        glDrawArrays(GL_TRIANGLES, 0, positions.size() / 3);
+        glBindVertexArray(0);
+        glUseProgram(0);
+
+        // Рисуем контрольные точки
+        glColor3f(1.0f, 0.0f, 0.0f);
+        glBegin(GL_POINTS);
+        for (const auto& point : controlPoints) {
+            glVertex3f(point.x, point.y, 0.0f);
+        }
+        glEnd();
+    }
+
+    void addTriangle(const Point& p1, const Point& p2, const Point& p3) {
+        // Позиции вершин
+        positions.push_back(p1.x); positions.push_back(p1.y); positions.push_back(p1.z);
+        positions.push_back(p2.x); positions.push_back(p2.y); positions.push_back(p2.z);
+        positions.push_back(p3.x); positions.push_back(p3.y); positions.push_back(p3.z);
+
+        // Нормали (заранее фиксированные вдоль оси Z)
+        normals.push_back(0.0f); normals.push_back(0.0f); normals.push_back(1.0f);
+        normals.push_back(0.0f); normals.push_back(0.0f); normals.push_back(1.0f);
+        normals.push_back(0.0f); normals.push_back(0.0f); normals.push_back(1.0f);
+    }
+
+    void drawSurface() {
+        if (controlPoints.empty()) {
+            return;
+        }
+
+
+        const int numLayers = 2; // Количество слоев по оси Z
+        const float zStep = 0.5f; // Шаг по оси Z
+
+        std::vector<std::vector<Point>> layers(numLayers);
+
+        // Генерируем точки для каждого слоя
+        for (int layer = 0; layer < numLayers; ++layer) {
+            float z = layer * zStep; // Определяем уровень Z для текущего слоя
+
+            for (float x = controlPoints.front().x; x <= controlPoints.back().x; x += 0.01f) {
+                float y = lagrangeInterpolation(x, controlPoints);
+                layers[layer].emplace_back(Point{x, y, z}); // Сохраняем точку в слое
+
+                positions.push_back(x);
+                positions.push_back(y);
+                positions.push_back(z);
+
+                normals.push_back(0.0f);
+                normals.push_back(0.0f);
+                normals.push_back(1.0f);
+            }
+        }
+
+        glBindVertexArray(VAO);
+
+
+        // Рисуем полигоны между слоями
+        for (int layer = 0; layer < numLayers - 1; ++layer) {
+            glBegin(GL_QUAD_STRIP); // Используем GL_QUAD_STRIP для рисования квадратных полос
+            for (size_t i = 0; i < layers[layer].size(); ++i) {
+                // Рисуем два треугольника для каждого квадрата
+                glColor3f(0, 1, 0.2); // Цвет поверхности
+                glVertex3f(layers[layer][i].x, layers[layer][i].y, layers[layer][layer].z); // Нижняя точка
+                glVertex3f(layers[layer + 1][i].x, layers[layer + 1][i].y, layers[layer + 1][layer + 1].z); // Верхняя точка
+            }
+            glEnd();
+        }
+
+        // Рисуем контрольные точки
+        glColor3f(1, 1, 0);
+        glBegin(GL_POINTS);
+        for (const auto& point : controlPoints) {
+            glVertex3f(point.x, point.y, 0.0f);
+        }
+        glEnd();
+
+//        for (const auto& point : controlPoints) {
+//            drawCircle(point.x, point.y, 0.05f, 30); // Рисуем круг с радиусом 0.05 и 30 сегментами
+//        }
     }
 
     void mousePressEvent(QMouseEvent* event) override{
@@ -172,7 +480,6 @@ protected:
         return c;
     }
 
-
     void drawLeafTriangle(float centerX, float centerY, float size, float angle) {
         // Вычисляем координаты вершин треугольника
         float halfSize = size / 2.0f;
@@ -212,7 +519,6 @@ protected:
         glEnd();
     }
 
-
     // Рекурсивная функция для генерации фрактала
     void generateFractal(Point startPoint, int depth, float len, float angle) {
         if (depth == 0) {
@@ -251,12 +557,10 @@ protected:
 
                     break;
                 case '+':
-                    //turtle.angle += turn;
-                    turtle.angle += M_PI / 4; // Поворот вправо на 45 градусов
+                    turtle.angle += turn;
                     break;
                 case '-':
-                    //turtle.angle -= turn;
-                    turtle.angle -= M_PI / 4; // Поворот влево на 45 градусов
+                    turtle.angle -= turn;
                     break;
                 case '[':
                     stack.push(turtle);
@@ -275,20 +579,11 @@ protected:
 
     std::string applyRules(const std::string& input) {
         std::string output;
-//        for (char c : input) {
-//            if (c == 'F') {
-//                output += newF;
-//            } else {
-//                output += c;
-//            }
-//        }
         for (char c : input) {
             if (c == 'F') {
-                output += "FF"; // Применяем правило F -> FF
-            } else if (c == 'X') {
-                output += "F-X+X+F+F-X"; // Применяем правило X -> F-X+X+F+F-X
+                output += newF;
             } else {
-                output += c; // Оставляем другие символы без изменений
+                output += c;
             }
         }
 
@@ -376,6 +671,12 @@ protected:
             }
         }
     }
+
+
+
+
+
+
 
 
 public slots:
@@ -491,6 +792,7 @@ public slots:
         }
         update();
     }
+
     void changeDfactorType(int index) {
         switch (index) {
             case 0: dFactorType = GL_ZERO; break;
@@ -543,6 +845,12 @@ public slots:
     ;
 
 private:
+    GLuint shaderProgram;
+    GLuint VBO[2], VAO;
+    std::vector<float> positions;
+    std::vector<float> normals;
+
+    QElapsedTimer timer;
     QPoint mousePosition;
     clickType clickTypeDrawing = figureDrawing;
     int selectedPoint = -1; // Индекс выбранной контрольной точки
