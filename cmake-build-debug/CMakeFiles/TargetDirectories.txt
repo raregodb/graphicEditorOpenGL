@@ -1,4 +1,0 @@
-/Users/raregod/Documents/5sem/graphics/graphicEditorOpenGL-4_iteration/cmake-build-debug/CMakeFiles/graphicEditor.dir
-/Users/raregod/Documents/5sem/graphics/graphicEditorOpenGL-4_iteration/cmake-build-debug/CMakeFiles/edit_cache.dir
-/Users/raregod/Documents/5sem/graphics/graphicEditorOpenGL-4_iteration/cmake-build-debug/CMakeFiles/rebuild_cache.dir
-/Users/raregod/Documents/5sem/graphics/graphicEditorOpenGL-4_iteration/cmake-build-debug/CMakeFiles/graphicEditor_autogen.dir
