@@ -16,10 +16,10 @@ Before usage turn off light source
 3.  Install dependencies:
   using cmake:
     ```
-    cmale . && make
+    cmake . && make
     ```
 # Usage
 Run the project with:
 ```
-./graphicEditorOpenGL
+./graphicEditor
 ```
